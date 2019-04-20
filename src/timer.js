@@ -12,6 +12,12 @@ const MESSAGES = {
     '/swf/outro1.swf': 'Avslutar speedrun',
 }
 
+function formatTime(ms) {
+    let m = (ms / 60000 | 0).toString().padStart(2, 0);
+    let s = (ms / 1000 % 60).toFixed(3).padStart(6, 0);
+    return `${m}:${s}`;
+}
+
 function timer() {
     let startTime = null;
     return function(request, response, next) {
@@ -22,7 +28,7 @@ function timer() {
         }
 
         if (MESSAGES.hasOwnProperty(request.path))
-            console.log(`${now - startTime}: ${MESSAGES[request.path]}`);
+            console.log(`[${formatTime(now - startTime)}] ${MESSAGES[request.path]}`);
 
         next();
     }
