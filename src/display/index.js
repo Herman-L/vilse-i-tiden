@@ -34,13 +34,9 @@ class Display extends React.Component {
         if (!this.state.open)
             return React.createElement('p', null, 'Ingen kontakt med servern. Ladda om sidan för att försöka igen.');
 
-        let segments = this.state.segments || [];
-
         return React.createElement('div', null,
-            segments.map(segment => {
-                return React.createElement('p', {
-                    key: JSON.stringify(segment),
-                }, `${segment.name}: ${segment.time}`);
+            React.createElement(Segments, {
+                segments: this.state.segments || [],
             }),
             React.createElement(Timer, {
                 startTime: this.state.startTime,
@@ -69,6 +65,15 @@ class Timer extends React.Component {
         let time = this.props.startTime ? (this.props.endTime || this.state.now) - this.props.startTime : 0;
         return React.createElement('p', null, (time / 1000).toFixed(3));
     }
+}
+
+function Segments(props) {
+    return React.createElement('div', null, props.segments.map(segment => {
+        let props = {
+            key: JSON.stringify(segment),
+        };
+        return React.createElement('p', props, `${segment.name}: ${segment.time}`);
+    }));
 }
 
 ReactDOM.render(
