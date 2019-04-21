@@ -1,12 +1,15 @@
 const express = require('express');
+const fs = require('fs').promises;
 const httpProxy = require('./httpProxy.js');
+const path = require('path');
 const Timer = require('./timer.js');
 
 (async () => {
     const server = express();
     const PORT = 8000;
 
-    let timer = new Timer();
+    let config = JSON.parse(await fs.readFile(path.join(__dirname, '../config_any%.json')));
+    let timer = new Timer(config);
 
     server.use('/', timer.middleware());
     server.use('/', await httpProxy('https://media.svt.se/spel/vintergatan'));

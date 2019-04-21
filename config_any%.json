@@ -1,0 +1,34 @@
+{
+  "segments": [{
+    "name": "Intro",
+    "trigger": ["/swf/intro.swf", -0.5]
+  }, {
+    "name": "Ökenlandskapet",
+    "trigger": "/xml/level_st_1.xml"
+  }, {
+    "name": "Grottorna",
+    "trigger": "/xml/level_st_2.xml"
+  }, {
+    "name": "Ürgüpernas berg",
+    "trigger": "/xml/level_st_3.xml"
+  }, {
+    "name": "Vattenfallen",
+    "trigger": "/xml/level_sk_1.xml"
+  }, {
+    "name": "Sjöarna",
+    "trigger": "/xml/level_sk_2.xml"
+  }, {
+    "name": "Höga skogen",
+    "trigger": "/xml/level_sk_3.xml"
+  }, {
+    "name": "Löpande banden",
+    "trigger": "/xml/level_fa_1.xml"
+  }, {
+    "name": "Lagret",
+    "trigger": "/xml/level_fa_2.xml"
+  }, {
+    "name": "Fabrikstaket",
+    "trigger": "/xml/level_fa_3.xml"
+  }],
+  "endTrigger": "/swf/outro1.swf"
+}

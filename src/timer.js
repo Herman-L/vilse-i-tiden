@@ -1,8 +1,9 @@
 const EventEmitter = require('events');
 
 class Timer extends EventEmitter {
-    constructor() {
+    constructor(config) {
         super();
+        this.config = config;
     }
     process(path) {
         console.log(path);
