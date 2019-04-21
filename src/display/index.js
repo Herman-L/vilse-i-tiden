@@ -1,3 +1,11 @@
+function formatTime(time) {
+    if (time === null)
+        return '-';
+    let minutes = (time / 60000 | 0).toString();
+    let seconds = (time / 1000 % 60).toFixed(3).padStart(6, '0');
+    return minutes + ':' + seconds;
+}
+
 class Display extends React.Component {
     constructor(props) {
         super(props);
@@ -63,16 +71,22 @@ class Timer extends React.Component {
     }
     render() {
         let time = this.props.startTime ? (this.props.endTime || this.state.now) - this.props.startTime : 0;
-        return React.createElement('p', null, (time / 1000).toFixed(3));
+        return React.createElement('p', null, formatTime(time));
     }
 }
 
 function Segments(props) {
-    return React.createElement('div', null, props.segments.map(segment => {
-        let props = {
+    let divProps = {
+        className: 'segments',
+    };
+    return React.createElement('div', divProps, props.segments.map(segment => {
+        let fragmentProps = {
             key: JSON.stringify(segment),
         };
-        return React.createElement('p', props, `${segment.name}: ${segment.time}`);
+        return React.createElement(React.Fragment, fragmentProps,
+            React.createElement('div', null, segment.name),
+            React.createElement('div', null, formatTime(segment.time)),
+        );
     }));
 }
 
