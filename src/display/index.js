@@ -3,18 +3,18 @@ class Display extends React.Component {
         super(props);
 
         this.state = {
-            message: null,
+            startTime: null,
+            endTime: null,
         };
 
         let socket = new WebSocket(`ws://${location.host}/timer/`);
-        socket.onmessage = message => {
-            this.setState({
-                message: message.data,
-            });
-        };
+        socket.onmessage = message => this.setState(JSON.parse(message.data));
     }
     render() {
-        return React.createElement('p', null, this.state.message);
+        return React.createElement('div', null, [
+            React.createElement('p', null, 'Starttid: ' + (this.state.startTime && new Date(this.state.startTime))),
+            React.createElement('p', null, 'Sluttid: ' + (this.state.endTime && new Date(this.state.endTime))),
+        ]);
     }
 }
 
