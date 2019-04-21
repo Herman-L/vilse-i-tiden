@@ -6,7 +6,13 @@ class Display {
 
     }
     middleware() {
-        return express.static(path.join(__dirname, 'display'))
+        let router = new express.Router();
+        router.use('/', express.static(path.join(__dirname, 'display')));
+        router.ws('/', (ws, request) => {
+            ws.send('Hello, client!');
+        });
+
+        return router;
     }
 }
 
