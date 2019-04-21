@@ -10,9 +10,13 @@ class Timer extends EventEmitter {
         this.startTime = null;
         this.endTime = null;
         this.segment = -1;
+        this.segments = this.config.segments.map(segment => ({
+            name: segment.name,
+            time: null,
+        }));
     }
     nextTrigger() {
-        let trigger = this.segment + 1 < this.config.segments.length ?
+        let trigger = this.segment + 1 < this.segments.length ?
             this.config.segments[this.segment + 1].trigger :
             this.config.endTrigger;
 
@@ -25,21 +29,23 @@ class Timer extends EventEmitter {
         if (this.endTime !== null)
             return;
 
-        let [triggerPath, triggerOffset] = this.nextTrigger();
+        let [triggerPath, triggerOffset] = this.nextTrigger();
         if (triggerPath == path) {
-            let now = Date.now() + triggerOffset;
+            let now = Date.now() / 1000 + triggerOffset;
 
             if (this.segment >= 0) {
-                console.log(`[${now - this.startTime}]: ${this.config.segments[this.segment].name}`);
+                let segment = this.segments[this.segment];
+                segment.time = now - this.startTime;
+                console.log(`[${segment.time}]: ${segment.name}`);
             } else {
-                console.log('Startar timer')
+                console.log('Startar timer');
             }
 
             this.segment += 1;
 
             if (this.segment == 0)
                 this.startTime = now;
-            else if(this.segment == this.config.segments.length)
+            else if (this.segment == this.segments.length)
                 this.endTime = now;
         }
     }
