@@ -11,6 +11,11 @@ const Timer = require('./timer.js');
     let config = JSON.parse(await fs.readFile(path.join(__dirname, '../config_any%.json')));
     let timer = new Timer(config);
 
+    timer.on('reset', () => console.log('Nollställer timer'));
+    timer.on('start', () => console.log('Startar timer'));
+    timer.on('split', () => console.log(timer.segments[timer.segment - 1].name));
+    timer.on('end', () => console.log('Stoppar timer'));
+
     server.use('/', timer.middleware());
     server.use('/', await httpProxy('https://media.svt.se/spel/vintergatan'));
 
