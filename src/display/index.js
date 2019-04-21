@@ -3,14 +3,36 @@ class Display extends React.Component {
         super(props);
 
         this.state = {
+            open: false,
             startTime: null,
             endTime: null,
         };
 
-        let socket = new WebSocket(`ws://${location.host}/timer/`);
-        socket.onmessage = message => this.setState(JSON.parse(message.data));
     }
+    componentDidMount() {
+        this.socket = new WebSocket(`ws://${location.host}/timer/`);
+        this.socket.onmessage = message => this.setState(JSON.parse(message.data));
+
+        this.setState({
+            open: true,
+        });
+
+        this.socket.onclose = () => {
+            this.socket = null;
+            this.setState({
+                open: false,
+            });
+        }
+    }
+    componentWillUnmount() {
+        if (this.socket)
+            this.socket.close();
+    }
+
     render() {
+        if (!this.state.open)
+            return React.createElement('p', null, 'Ingen kontakt med servern. Ladda om sidan för att försöka igen.');
+
         return React.createElement(Timer, {
             startTime: this.state.startTime,
             endTime: this.state.endTime,
