@@ -15,6 +15,10 @@ class Display {
         return JSON.stringify({
             startTime: this.timer.startTime,
             endTime: this.timer.endTime,
+            segments: this.timer.segments.map(segment => ({
+                name: segment.name,
+                time: segment.time,
+            })),
         });
     }
     broadcast() {

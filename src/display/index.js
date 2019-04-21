@@ -6,6 +6,7 @@ class Display extends React.Component {
             open: false,
             startTime: null,
             endTime: null,
+            segments: null,
         };
 
     }
@@ -22,7 +23,7 @@ class Display extends React.Component {
             this.setState({
                 open: false,
             });
-        }
+        };
     }
     componentWillUnmount() {
         if (this.socket)
@@ -33,10 +34,19 @@ class Display extends React.Component {
         if (!this.state.open)
             return React.createElement('p', null, 'Ingen kontakt med servern. Ladda om sidan för att försöka igen.');
 
-        return React.createElement(Timer, {
-            startTime: this.state.startTime,
-            endTime: this.state.endTime,
-        });
+        let segments = this.state.segments || [];
+
+        return React.createElement('div', null,
+            segments.map(segment => {
+                return React.createElement('p', {
+                    key: JSON.stringify(segment),
+                }, `${segment.name}: ${segment.time}`);
+            }),
+            React.createElement(Timer, {
+                startTime: this.state.startTime,
+                endTime: this.state.endTime,
+            }),
+        );
     }
 }
 
@@ -57,7 +67,6 @@ class Timer extends React.Component {
     }
     render() {
         let time = this.props.startTime ? (this.props.endTime || this.state.now) - this.props.startTime : 0;
-        console.log(this.props.startTime, this.props.endTime, this.state.now);
         return React.createElement('p', null, (time / 1000).toFixed(3));
     }
 }
