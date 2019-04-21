@@ -1,7 +1,7 @@
 {
   "segments": [{
     "name": "Intro",
-    "trigger": ["/swf/intro.swf", -0.5]
+    "trigger": ["/swf/intro.swf", -500]
   }, {
     "name": "Ökenlandskapet",
     "trigger": "/xml/level_st_1.xml"

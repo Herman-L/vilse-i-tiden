@@ -33,7 +33,7 @@ class Timer extends EventEmitter {
 
         let [triggerPath, triggerOffset] = this.nextTrigger();
         if (triggerPath === path) {
-            let now = Date.now() / 1000 + triggerOffset;
+            let now = Date.now() + triggerOffset;
 
             this.segment += 1;
 

@@ -4,6 +4,12 @@ const httpProxy = require('./httpProxy.js');
 const path = require('path');
 const Timer = require('./timer.js');
 
+function formatTime(time) {
+    let minutes = (time / 60000 | 0).toString().padStart(2, '0');
+    let seconds = (time / 1000 % 60).toFixed(3).padStart(6, '0');
+    return minutes + ':' + seconds;
+}
+
 (async () => {
     const server = express();
     const PORT = 8000;
@@ -13,7 +19,10 @@ const Timer = require('./timer.js');
 
     timer.on('reset', () => console.log('Nollställer timer'));
     timer.on('start', () => console.log('Startar timer'));
-    timer.on('split', () => console.log(timer.segments[timer.segment - 1].name));
+    timer.on('split', () => {
+        let segment = timer.segments[timer.segment - 1];
+        console.log(`[${formatTime(segment.time)}]: ${segment.name}`)
+    });
     timer.on('end', () => console.log('Stoppar timer'));
 
     server.use('/', timer.middleware());
