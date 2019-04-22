@@ -1,19 +1,37 @@
 const EventEmitter = require('events');
+const fs = require('fs').promises;
 
 class Timer extends EventEmitter {
-    constructor(config) {
+    constructor(configPath) {
         super();
-        this.config = config;
-        this.reset();
+        this.config = null;
+        this.configPath = configPath
+        this.loadConfig().then(() => this.reset());
+    }
+    async loadConfig() {
+        let json = await fs.readFile(this.configPath, 'UTF-8');
+        this.config = JSON.parse(json);
+    }
+    async saveConfig() {
+        let json = JSON.stringify(this.config, null, 2);
+        await fs.writeFile(this.configPath, json);
+    }
+    async saveTimes() {
+        if (this.segment > 0) {
+            let times = this.segments.slice(0, this.segment).map(segment => segment.time);
+            this.config.history.push(times.join(' '));
+            await this.saveConfig();
+        }
     }
     reset() {
+        this.saveTimes();
         this.startTime = null;
         this.endTime = null;
         this.segment = -1;
         this.segments = this.config.segments.map(segment => ({
             name: segment.name,
             time: null,
-            comparasion: segment.comparasion,
+            comparasion: null,
         }));
 
         this.emit('reset');

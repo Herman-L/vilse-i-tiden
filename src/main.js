@@ -1,7 +1,6 @@
 const Display = require('./display.js');
 const express = require('express');
 const expressWs = require('express-ws');
-const fs = require('fs').promises;
 const httpProxy = require('./httpProxy.js');
 const path = require('path');
 const Timer = require('./timer.js');
@@ -12,9 +11,7 @@ const PORT = 8000;
     let server = express();
     expressWs(server);
 
-    let config = JSON.parse(await fs.readFile(path.join(__dirname, '../config_any%.json')));
-    let timer = new Timer(config);
-
+    let timer = new Timer(path.join(__dirname, '../config_any%.json'));
     let display = new Display(timer);
 
     server.use('/timer', display.middleware());
