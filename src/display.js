@@ -27,7 +27,7 @@ class Display {
     }
     middleware() {
         let router = new express.Router();
-        router.use('/', express.static(path.join(__dirname, 'display')));
+        router.use('/', express.static(path.join(__dirname, '../dist/')));
         router.ws('/', (ws, request) => {
             this.connections.push(ws);
             ws.send(this.clientState());

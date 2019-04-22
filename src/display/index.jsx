@@ -1,3 +1,11 @@
+import {
+    h,
+    n,
+    render,
+    Component,
+    Fragment
+} from 'preact';
+
 function formatTime(time) {
     if (time === null)
         return '-';
@@ -6,7 +14,7 @@ function formatTime(time) {
     return minutes + ':' + seconds;
 }
 
-class Display extends React.Component {
+class Display extends Component {
     constructor(props) {
         super(props);
 
@@ -40,21 +48,16 @@ class Display extends React.Component {
 
     render() {
         if (!this.state.open)
-            return React.createElement('p', null, 'Ingen kontakt med servern. Ladda om sidan för att försöka igen.');
+            return <p>Ingen kontakt med servern. Ladda om sidan för att försöka igen</p>;
 
-        return React.createElement('div', null,
-            React.createElement(Segments, {
-                segments: this.state.segments || [],
-            }),
-            React.createElement(Timer, {
-                startTime: this.state.startTime,
-                endTime: this.state.endTime,
-            }),
-        );
+        return <div>
+            <Segments segments={this.state.segments || []} />
+            <Timer startTime={this.state.startTime} endTime={this.state.endTime} />
+        </div>;
     }
 }
 
-class Timer extends React.Component {
+class Timer extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -71,26 +74,19 @@ class Timer extends React.Component {
     }
     render() {
         let time = this.props.startTime ? (this.props.endTime || this.state.now) - this.props.startTime : 0;
-        return React.createElement('p', null, formatTime(time));
+        return <p>{formatTime(time)}</p>;
     }
 }
 
 function Segments(props) {
-    let divProps = {
-        className: 'segments',
-    };
-    return React.createElement('div', divProps, props.segments.map(segment => {
-        let fragmentProps = {
-            key: JSON.stringify(segment),
-        };
-        return React.createElement(React.Fragment, fragmentProps,
-            React.createElement('div', null, segment.name),
-            React.createElement('div', null, formatTime(segment.time)),
-        );
-    }));
+    return <div class="segments">{
+        props.segments.map(segment => {
+            return <Fragment>
+                <div>{segment.name}</div>
+                <div>{formatTime(segment.time)}</div>
+            </Fragment>;
+        })
+    }</div>;
 }
 
-ReactDOM.render(
-    React.createElement(Display),
-    document.getElementById('root'),
-);
+render(<Display />, document.getElementById('root'));
