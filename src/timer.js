@@ -23,15 +23,27 @@ class Timer extends EventEmitter {
             await this.saveConfig();
         }
     }
+    bestRun() {
+        let best = [];
+        for (let run of this.config.history) {
+            run = run.split(' ').map(n => parseInt(n));
+            if (run.length < best.length)
+                continue;
+            if (run[run.length - 1] < best[best.length - 1] || run.length > best.length)
+                best = run;
+        }
+        return best;
+    }
     reset() {
         this.saveTimes();
         this.startTime = null;
         this.endTime = null;
         this.segment = -1;
-        this.segments = this.config.segments.map(segment => ({
+        let best = this.bestRun();
+        this.segments = this.config.segments.map((segment, i) => ({
             name: segment.name,
             time: null,
-            comparasion: null,
+            comparasion: i < best.length ? best[i] : null,
         }));
 
         this.emit('reset');
