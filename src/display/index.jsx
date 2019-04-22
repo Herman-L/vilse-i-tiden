@@ -6,11 +6,12 @@ import {
     Fragment
 } from 'preact';
 
-function formatTime(time) {
+function formatTime(time, precision=1) {
     if (time === null)
         return '-';
+    time = +time.toFixed(precision);
     let minutes = (time / 60000 | 0).toString();
-    let seconds = (time / 1000 % 60).toFixed(3).padStart(6, '0');
+    let seconds = (time / 1000 % 60).toFixed(precision).padStart(precision + 3, '0');
     return minutes + ':' + seconds;
 }
 
@@ -24,10 +25,10 @@ function formatTimeDiff(time, comparasion) {
     diff = Math.abs(diff);
 
     let formatted;
-    if (diff < 10)
+    if (diff < 60)
         formatted = diff.toFixed(1);
     else
-        formatted = diff.toFixed(0);
+        formatted = (diff / 60 | 0) + ':' + (diff % 60 | 0).toString().padStart(2, '0');
 
     return sign + formatted;
 }
@@ -94,7 +95,7 @@ class Timer extends Component {
     }
     render() {
         let time = this.props.startTime ? (this.props.endTime || this.state.now) - this.props.startTime : 0;
-        return <p class="timer">{formatTime(time)}</p>;
+        return <p class="timer">{formatTime(time, 3)}</p>;
     }
 }
 

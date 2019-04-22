@@ -15,11 +15,7 @@
 .segment-current {
     background: #DDF;
 }
-.segment-diff {
-    text-align: center;
-}
-.segment-time {
-    min-width: 25vw;
+.segment-diff, .segment-time {
     text-align: center;
 }
 
