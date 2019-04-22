@@ -47,6 +47,8 @@ class Display extends Component {
     }
 
     render() {
+        console.log(this.state);
+
         if (!this.state.open)
             return <p>Ingen kontakt med servern. Ladda om sidan för att försöka igen</p>;
 
@@ -74,16 +76,17 @@ class Timer extends Component {
     }
     render() {
         let time = this.props.startTime ? (this.props.endTime || this.state.now) - this.props.startTime : 0;
-        return <p>{formatTime(time)}</p>;
+        return <p class="timer">{formatTime(time)}</p>;
     }
 }
 
 function Segments(props) {
     return <div class="segments">{
         props.segments.map(segment => {
+            let current = segment.current ? " segment-current" : ""
             return <Fragment>
-                <div>{segment.name}</div>
-                <div>{formatTime(segment.time)}</div>
+                <div class={"segment-name" + current}>{segment.name}</div>
+                <div class={"segment-time" + current}>{formatTime(segment.time)}</div>
             </Fragment>;
         })
     }</div>;

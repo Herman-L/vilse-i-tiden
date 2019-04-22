@@ -1,8 +1,29 @@
 * {
     font-family: sans-serif;
+    font-size: 6vw;
+    margin: 0;
+    padding: 0;
 }
 
 .segments {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto max-content;
+}
+.segments > * {
+    padding: 2vw;
+}
+.segment-current {
+    background: #DDF;
+}
+.segment-time {
+    min-width: 25vw;
+    text-align: center;
+}
+
+.timer {
+    text-align: right;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 15vw;
+    padding: 2vw;
 }
