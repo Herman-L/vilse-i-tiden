@@ -6,31 +6,12 @@ import {
     Fragment
 } from 'preact';
 
-function formatTime(time, precision=1) {
-    if (time === null)
-        return '-';
+function formatTime(time, precision = 1) {
+    if (time === null) time = 0;
     time = +time.toFixed(precision);
     let minutes = (time / 60000 | 0).toString();
     let seconds = (time / 1000 % 60).toFixed(precision).padStart(precision + 3, '0');
     return minutes + ':' + seconds;
-}
-
-function formatTimeDiff(time, comparasion) {
-    if (time === null || comparasion === null)
-        return '';
-
-    let diff = +((time - comparasion) / 1000).toFixed(1);
-
-    let sign = diff > 0 ? '+' : diff < 0 ? '-' : '';
-    diff = Math.abs(diff);
-
-    let formatted;
-    if (diff < 60)
-        formatted = diff.toFixed(1);
-    else
-        formatted = (diff / 60 | 0) + ':' + (diff % 60 | 0).toString().padStart(2, '0');
-
-    return sign + formatted;
 }
 
 class Display extends Component {
@@ -95,21 +76,41 @@ class Timer extends Component {
     }
     render() {
         let time = this.props.startTime ? (this.props.endTime || this.state.now) - this.props.startTime : 0;
-        return <p class="timer">{formatTime(time, 3)}</p>;
+        return <p class='timer'>{formatTime(time, 3)}</p>;
     }
 }
 
 function Segments(props) {
-    return <div class="segments">{
+    return <div class='segments'>{
         props.segments.map(segment => {
-            let current = segment.current ? " segment-current" : ""
-            return <Fragment>
-                <div class={"segment-name" + current}>{segment.name}</div>
-                <div class={"segment-diff" + current}>{formatTimeDiff(segment.time, segment.comparasion)}</div>
-                <div class={"segment-time" + current}>{formatTime(segment.time || segment.comparasion)}</div>
-            </Fragment>;
+            let current = segment.current ? ' current' : '';
+            return <div class={'segment' + current}>
+                <div class='segment-name'>{segment.name}</div>
+                <SegmentDiff time={segment.time} comparasion={segment.comparasion} />
+                <div class='segment-time'>{formatTime(segment.time || segment.comparasion)}</div>
+            </div>;
         })
     }</div>;
+}
+
+function SegmentDiff(props) {
+    if (props.time === null || props.comparasion === null)
+        return <div class='segment-diff' />;
+
+    let diff = props.time - props.comparasion;
+    diff = +(diff / 1000).toFixed(1);
+
+    let sign = diff > 0 ? '+' : diff < 0 ? '-' : '';
+    let className = 'segment-diff' + (diff > 0 ? ' positive' : diff < 0 ? ' negative' : ' neutral');
+    diff = Math.abs(diff);
+
+    let formatted;
+    if (diff < 60)
+        formatted = diff.toFixed(1);
+    else
+        formatted = (diff / 60 | 0) + ':' + (diff % 60 | 0).toString().padStart(2, '0');
+
+    return <div class={className}>{sign + formatted}</div>;
 }
 
 render(<Display />, document.getElementById('root'));
