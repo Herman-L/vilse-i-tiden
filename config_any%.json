@@ -1,34 +1,44 @@
 {
   "segments": [{
     "name": "Intro",
-    "trigger": ["/swf/intro.swf", -500]
+    "trigger": ["/swf/intro.swf", -500],
+    "comparasion": 2797
   }, {
     "name": "Ökenlandskapet",
-    "trigger": "/xml/level_st_1.xml"
+    "trigger": "/xml/level_st_1.xml",
+    "comparasion": 72922
   }, {
     "name": "Grottorna",
-    "trigger": "/xml/level_st_2.xml"
+    "trigger": "/xml/level_st_2.xml",
+    "comparasion": 168918
   }, {
     "name": "Ürgüpernas berg",
-    "trigger": "/xml/level_st_3.xml"
+    "trigger": "/xml/level_st_3.xml",
+    "comparasion": 183125
   }, {
     "name": "Vattenfallen",
-    "trigger": "/xml/level_sk_1.xml"
+    "trigger": "/xml/level_sk_1.xml",
+    "comparasion": 266347
   }, {
     "name": "Sjöarna",
-    "trigger": "/xml/level_sk_2.xml"
+    "trigger": "/xml/level_sk_2.xml",
+    "comparasion": 364945
   }, {
     "name": "Höga skogen",
-    "trigger": "/xml/level_sk_3.xml"
+    "trigger": "/xml/level_sk_3.xml",
+    "comparasion": 390720
   }, {
     "name": "Löpande banden",
-    "trigger": "/xml/level_fa_1.xml"
+    "trigger": "/xml/level_fa_1.xml",
+    "comparasion": 477711
   }, {
     "name": "Lagret",
-    "trigger": "/xml/level_fa_2.xml"
+    "trigger": "/xml/level_fa_2.xml",
+    "comparasion": 561742
   }, {
     "name": "Fabrikstaket",
-    "trigger": "/xml/level_fa_3.xml"
+    "trigger": "/xml/level_fa_3.xml",
+    "comparasion": 615677
   }],
   "endTrigger": "/swf/outro1.swf"
 }

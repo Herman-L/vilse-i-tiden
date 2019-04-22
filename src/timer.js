@@ -13,6 +13,7 @@ class Timer extends EventEmitter {
         this.segments = this.config.segments.map(segment => ({
             name: segment.name,
             time: null,
+            comparasion: segment.comparasion,
         }));
 
         this.emit('reset');

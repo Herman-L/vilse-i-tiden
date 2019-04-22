@@ -14,6 +14,24 @@ function formatTime(time) {
     return minutes + ':' + seconds;
 }
 
+function formatTimeDiff(time, comparasion) {
+    if (time === null || comparasion === null)
+        return '';
+
+    let diff = +((time - comparasion) / 1000).toFixed(1);
+
+    let sign = diff > 0 ? '+' : diff < 0 ? '-' : '';
+    diff = Math.abs(diff);
+
+    let formatted;
+    if (diff < 10)
+        formatted = diff.toFixed(1);
+    else
+        formatted = diff.toFixed(0);
+
+    return sign + formatted;
+}
+
 class Display extends Component {
     constructor(props) {
         super(props);
@@ -86,7 +104,8 @@ function Segments(props) {
             let current = segment.current ? " segment-current" : ""
             return <Fragment>
                 <div class={"segment-name" + current}>{segment.name}</div>
-                <div class={"segment-time" + current}>{formatTime(segment.time)}</div>
+                <div class={"segment-diff" + current}>{formatTimeDiff(segment.time, segment.comparasion)}</div>
+                <div class={"segment-time" + current}>{formatTime(segment.time || segment.comparasion)}</div>
             </Fragment>;
         })
     }</div>;

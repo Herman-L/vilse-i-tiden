@@ -7,13 +7,16 @@
 
 .segments {
     display: grid;
-    grid-template-columns: auto max-content;
+    grid-template-columns: auto max-content max-content;
 }
 .segments > * {
     padding: 2vw;
 }
 .segment-current {
     background: #DDF;
+}
+.segment-diff {
+    text-align: center;
 }
 .segment-time {
     min-width: 25vw;

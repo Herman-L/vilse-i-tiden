@@ -18,6 +18,7 @@ class Display {
             segments: this.timer.segments.map((segment, index) => ({
                 name: segment.name,
                 time: segment.time,
+                comparasion: segment.comparasion,
                 current: index === this.timer.segment,
             })),
         });
