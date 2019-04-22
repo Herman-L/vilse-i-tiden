@@ -1,4 +1,5 @@
 {
+  "name": "Any% All Parts",
   "segments": [{
     "name": "Intro",
     "trigger": ["/swf/intro.swf", -500],

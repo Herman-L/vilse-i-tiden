@@ -11,6 +11,11 @@ body {
     color: white;
 }
 
+.category {
+    font-size: 10vw;
+    padding: 2vw;
+}
+
 .segments {
     display: grid;
     grid-template-columns: auto max-content max-content;
@@ -22,6 +27,10 @@ body {
     & > * {
         padding: 2vw;
         border-bottom: 1px solid #404040;
+    }
+
+    &:first-child > * {
+        border-top: 1px solid #404040;
     }
 
     &.current > * {

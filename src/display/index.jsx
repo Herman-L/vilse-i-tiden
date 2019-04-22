@@ -44,6 +44,7 @@ class Display extends Component {
             return <p>Ingen kontakt med servern. Ladda om sidan för att försöka igen</p>;
 
         return <div>
+            <p class='category'>{this.state.name}</p>
             <Segments segments={this.state.segments || []} />
             <Timer startTime={this.state.startTime} endTime={this.state.endTime} />
         </div>;

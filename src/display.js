@@ -13,6 +13,7 @@ class Display {
     }
     clientState() {
         return JSON.stringify({
+            name: this.timer.config.name,
             startTime: this.timer.startTime,
             endTime: this.timer.endTime,
             segments: this.timer.segments.map((segment, index) => ({
