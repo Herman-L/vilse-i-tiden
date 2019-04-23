@@ -17,10 +17,11 @@ class Timer extends EventEmitter {
         await fs.writeFile(this.configPath, json);
     }
     async saveTimes() {
-        if (this.segment > 0) {
+        if (this.segment > 0 && !this.saved) {
             let times = this.segments.slice(0, this.segment).map(segment => segment.time);
             this.config.history.push(times.join(' '));
             await this.saveConfig();
+            this.saved = true;
         }
     }
     bestRun() {
@@ -39,6 +40,7 @@ class Timer extends EventEmitter {
         this.startTime = null;
         this.endTime = null;
         this.segment = -1;
+        this.saved = false;
         let best = this.bestRun();
         this.segments = this.config.segments.map((segment, i) => ({
             name: segment.name,
@@ -81,7 +83,10 @@ class Timer extends EventEmitter {
                 if (isEnd) this.endTime = now;
 
                 this.emit('split');
-                if (isEnd) this.emit('end');
+                if (isEnd) {
+                    this.emit('end');
+                    this.saveTimes();
+                }
             }
         }
     }

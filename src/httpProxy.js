@@ -41,7 +41,7 @@ async function httpProxy(destination) {
     let lines = await fs.readFile(path.join(__dirname, 'files.txt'), 'UTF-8');
     await Promise.all(lines.split('\n')
         .filter(s => s.length > 0)
-        .map(s => loadCache(s)));;
+        .map(s => loadCache(s.trim())));
 
     return async function(request, response, next) {
         if (!cache.has(request.path))

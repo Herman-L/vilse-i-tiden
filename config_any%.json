@@ -2,15 +2,11 @@
   "name": "Any% All Parts",
   "segments": [
     {
-      "name": "Intro",
+      "name": "Ökenlandskapet",
       "trigger": [
         "/swf/intro.swf",
         -500
       ]
-    },
-    {
-      "name": "Ökenlandskapet",
-      "trigger": "/xml/level_st_1.xml"
     },
     {
       "name": "Grottorna",
@@ -46,5 +42,7 @@
     }
   ],
   "endTrigger": "/swf/outro1.swf",
-  "history": []
+  "history": [
+    "73542 169545 183580 266576 344222 369744 455368 537889 589057"
+  ]
 }
