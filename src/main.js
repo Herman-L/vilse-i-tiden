@@ -16,6 +16,7 @@ const PORT = 8000;
 
     server.use('/timer', display.middleware());
     server.use('/', timer.middleware());
+    server.use('/', express.static(path.join(__dirname, '../static/')));
     server.use('/', await httpProxy('https://media.svt.se/spel/vintergatan'));
 
     server.listen(PORT, () => console.log(`Server startad på http://localhost:${PORT}/`));
