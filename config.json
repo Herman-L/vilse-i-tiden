@@ -1,0 +1,5 @@
+{
+  "host": "https://media.svt.se/spel/vintergatan",
+  "port": 8000,
+  "segments": "segments_any%.json"
+}

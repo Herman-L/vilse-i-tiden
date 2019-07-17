@@ -2,31 +2,31 @@ const EventEmitter = require('events');
 const fs = require('fs').promises;
 
 class Timer extends EventEmitter {
-    constructor(configPath) {
+    constructor(segmentPath) {
         super();
-        this.config = null;
-        this.configPath = configPath
+        this.segmentConfig = null;
+        this.segmentPath = segmentPath;
         this.loadConfig().then(() => this.reset());
     }
     async loadConfig() {
-        let json = await fs.readFile(this.configPath, 'UTF-8');
-        this.config = JSON.parse(json);
+        let json = await fs.readFile(this.segmentPath, 'UTF-8');
+        this.segmentConfig = JSON.parse(json);
     }
     async saveConfig() {
-        let json = JSON.stringify(this.config, null, 2);
-        await fs.writeFile(this.configPath, json);
+        let json = JSON.stringify(this.segmentConfig, null, 2);
+        await fs.writeFile(this.segmentPath, json);
     }
     async saveTimes() {
         if (this.segment > 0 && !this.saved) {
             let times = this.segments.slice(0, this.segment).map(segment => segment.time);
-            this.config.history.push(times.join(' '));
+            this.segmentConfig.history.push(times.join(' '));
             await this.saveConfig();
             this.saved = true;
         }
     }
     bestRun() {
         let best = [];
-        for (let run of this.config.history) {
+        for (let run of this.segmentConfig.history) {
             run = run.split(' ').map(n => parseInt(n));
             if (run.length < best.length)
                 continue;
@@ -42,7 +42,7 @@ class Timer extends EventEmitter {
         this.segment = -1;
         this.saved = false;
         let best = this.bestRun();
-        this.segments = this.config.segments.map((segment, i) => ({
+        this.segments = this.segmentConfig.segments.map((segment, i) => ({
             name: segment.name,
             time: null,
             comparasion: i < best.length ? best[i] : null,
@@ -52,8 +52,8 @@ class Timer extends EventEmitter {
     }
     nextTrigger() {
         let trigger = this.segment + 1 < this.segments.length ?
-            this.config.segments[this.segment + 1].trigger :
-            this.config.endTrigger;
+            this.segmentConfig.segments[this.segment + 1].trigger :
+            this.segmentConfig.endTrigger;
 
         return Array.isArray(trigger) ? trigger : [trigger, 0];
     }
