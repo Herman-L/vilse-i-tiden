@@ -13,7 +13,7 @@ class HttpProxy {
                 const status = res.statusCode;
                 const headers = {
                     'content-type': res.headers['content-type'],
-                    'cache-control': ['no-cache', 'no-store', 'must-revalidate'],
+                    'cache-control': ['no-cache', 'must-revalidate'],
                     'expires': 0,
                 };
 
@@ -46,8 +46,7 @@ class HttpProxy {
         };
     }
     async preload() {
-        console.log('Cachar filer');
-        let lines = await fs.readFile(path.join(__dirname, 'files.txt'), 'UTF-8');
+        const lines = await fs.readFile(path.join(__dirname, 'files.txt'), 'UTF-8');
         await Promise.all(lines.split('\n')
             .filter(s => s.length > 0)
             .map(s => this.loadCache(s.trim())));

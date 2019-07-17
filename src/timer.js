@@ -9,16 +9,16 @@ class Timer extends EventEmitter {
         this.loadConfig().then(() => this.reset());
     }
     async loadConfig() {
-        let json = await fs.readFile(this.segmentPath, 'UTF-8');
+        const json = await fs.readFile(this.segmentPath, 'UTF-8');
         this.segmentConfig = JSON.parse(json);
     }
     async saveConfig() {
-        let json = JSON.stringify(this.segmentConfig, null, 2);
-        await fs.writeFile(this.segmentPath, json);
+        const json = JSON.stringify(this.segmentConfig, null, 2);
+        await fs.writeFile(this.segmentPath, json + '\n');
     }
     async saveTimes() {
         if (this.segment > 0 && !this.saved) {
-            let times = this.segments.slice(0, this.segment).map(segment => segment.time);
+            const times = this.segments.slice(0, this.segment).map(segment => segment.time);
             this.segmentConfig.history.push(times.join(' '));
             await this.saveConfig();
             this.saved = true;
@@ -41,7 +41,7 @@ class Timer extends EventEmitter {
         this.endTime = null;
         this.segment = -1;
         this.saved = false;
-        let best = this.bestRun();
+        const best = this.bestRun();
         this.segments = this.segmentConfig.segments.map((segment, i) => ({
             name: segment.name,
             time: null,
@@ -51,7 +51,7 @@ class Timer extends EventEmitter {
         this.emit('reset');
     }
     nextTrigger() {
-        let trigger = this.segment + 1 < this.segments.length ?
+        const trigger = this.segment + 1 < this.segments.length ?
             this.segmentConfig.segments[this.segment + 1].trigger :
             this.segmentConfig.endTrigger;
 
@@ -64,7 +64,7 @@ class Timer extends EventEmitter {
         if (this.endTime !== null)
             return;
 
-        let [triggerPath, triggerOffset] = this.nextTrigger();
+        const [triggerPath, triggerOffset] = this.nextTrigger();
         if (triggerPath === path) {
             let now = Date.now() + triggerOffset;
 

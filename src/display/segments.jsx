@@ -25,8 +25,8 @@ function SegmentDiff(props) {
     let diff = props.time - props.comparasion;
     diff = +(diff / 1000).toFixed(1);
 
-    let sign = diff > 0 ? '+' : diff < 0 ? '-' : '';
-    let className = 'segment-diff' + (diff > 0 ? ' positive' : diff < 0 ? ' negative' : ' neutral');
+    const sign = diff > 0 ? '+' : diff < 0 ? '-' : '';
+    const className = 'segment-diff' + (diff > 0 ? ' positive' : diff < 0 ? ' negative' : ' neutral');
     diff = Math.abs(diff);
 
     let formatted;

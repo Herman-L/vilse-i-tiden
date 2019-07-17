@@ -8,9 +8,9 @@ const HttpProxy = require('./httpProxy.js');
 const Timer = require('./timer.js');
 
 (async () => {
-    let baseDir =  path.join(__dirname, '..');
-    let configPath = path.join(baseDir, 'config.json');
-    let config = JSON.parse(await fs.readFile(configPath, 'UTF-8'));
+    const baseDir =  path.join(__dirname, '..');
+    const configPath = path.join(baseDir, 'config.json');
+    const config = JSON.parse(await fs.readFile(configPath, 'UTF-8'));
 
     let server = express();
     expressWs(server);
@@ -19,7 +19,11 @@ const Timer = require('./timer.js');
     let display = new Display(timer);
     let proxy = new HttpProxy(config.host);
 
-    await proxy.preload();
+    (async () => {
+        console.log('Cachar filer');
+        await proxy.preload();
+        console.log('Alla filer cachade');
+    })();
 
     server.use('/timer', display.middleware());
     server.use('/', timer.middleware());

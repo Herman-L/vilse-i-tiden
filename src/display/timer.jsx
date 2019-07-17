@@ -22,7 +22,7 @@ export default class Timer extends Component {
         clearInterval(this.interval);
     }
     render() {
-        let time = this.props.startTime ? (this.props.endTime || this.state.now) - this.props.startTime : 0;
+        const time = this.props.startTime ? (this.props.endTime || this.state.now) - this.props.startTime : 0;
         return <p class='timer'>{formatTime(time, 3)}</p>;
     }
 }

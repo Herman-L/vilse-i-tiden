@@ -35,7 +35,7 @@ class Display {
             this.connections.push(ws);
             ws.send(this.clientState());
             ws.on('close', () => {
-                let index = this.connections.indexOf(ws);
+                const index = this.connections.indexOf(ws);
                 this.connections.splice(index, 1);
             });
         });
