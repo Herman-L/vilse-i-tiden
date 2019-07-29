@@ -1,15 +1,24 @@
 const fs = require('fs').promises;
+const http = require('http');
 const https = require('https');
 const path = require('path');
+
+const protocols = {http, https};
 
 class HttpProxy {
     constructor(host) {
         this.host = host;
         this.cache = new Map();
+
+        const protocol = (/^(.+?):/.exec(host) || ['', ''])[1];
+        if (protocols.hasOwnProperty(protocol))
+            this.protocol = protocols[protocol];
+        else
+            throw new Error(`The protocol '${protocol}' is unsupported`);
     }
     loadCache(path) {
         return new Promise((resolve, reject) => {
-            https.get(this.host + path, res => {
+            this.protocol.get(this.host + path, res => {
                 const status = res.statusCode;
                 const headers = {
                     'content-type': res.headers['content-type'],
