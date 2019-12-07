@@ -22,8 +22,8 @@
     "express-ws": "^4.0.0"
   },
   "devDependencies": {
-    "less": "^3.9.0",
-    "parcel-bundler": "^1.12.3",
-    "preact": "^10.0.0-beta.0"
+    "less": "^3.10.3",
+    "parcel-bundler": "^1.12.4",
+    "preact": "^10.0.5"
   }
 }
