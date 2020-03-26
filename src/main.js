@@ -20,9 +20,9 @@ const Timer = require('./timer.js');
     let proxy = new HttpProxy(config.host);
 
     (async () => {
-        console.log('Cachar filer');
+        console.log('Caching the files');
         await proxy.preload();
-        console.log('Alla filer cachade');
+        console.log('All files cached');
     })();
 
     server.use('/timer', display.middleware());
@@ -30,5 +30,5 @@ const Timer = require('./timer.js');
     server.use('/', express.static(path.join(__dirname, '../static/')));
     server.use('/', proxy.middleware());
 
-    server.listen(config.port, () => console.log(`Server startad på http://localhost:${config.port}/`));
+    server.listen(config.port, () => console.log(`Server started on http://localhost:${config.port}/`));
 })();

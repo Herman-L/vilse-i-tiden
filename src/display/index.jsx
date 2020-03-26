@@ -41,7 +41,7 @@ class Display extends Component {
 
     render() {
         if (!this.state.open)
-            return <p>Ingen kontakt med servern. Ladda om sidan för att försöka igen</p>;
+            return <p>Lost contact to the server. Reload the page to try again.</p>;
 
         return <div>
             <p class='category'>{this.state.name}</p>
